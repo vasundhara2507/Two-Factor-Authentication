@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification</title>
+    <style>
+        body {
+            background-color: #333;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding-bottom: 50px; /* Adjust as needed */
+        }
+
+        h1, h2 {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px; /* Adjust as needed */
+        }
+
+        input[type="tel"], input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px; /* Adjust spacing */
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Dark blue */
+            color: black;
+        }
+
+        /* Error message */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .valid-otp-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        #otp-input {
+            margin-left: 43%;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px; /* Adjusted margin-top */
+            position: relative; /* Added position relative */
+        }
+
+        .image-container img {
+            width: 250px;
+            margin: 0 70px; /* Adjusted margin */
+        }
+
+        .bottom-button {
+            position: absolute; /* Changed to absolute */
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff; /* Blue */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .bottom-button:hover {
+            background-color: #0056b3; /* Dark blue */
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<h1>OTP VERIFICATION</h1>
+<div class="container">
+    <div class="image-container">
+        <img src="https://plugins.miniorange.com/wp-content/uploads/2022/03/sms-otp.webp" alt="Image 2">
+    </div>
+    <form onsubmit="return false;">
+        <input
+                type="tel"
+                id="phone-input"
+                placeholder="Directly press otp button mobilenumber are already registered"
+                pattern="[0-9]{10}"
+                required
+                hidden
+        />
+        <span class="error-message" id="phone-error"></span>
+        <button onclick="getAndSendOTP()">Get OTP</button><br />
+        <br />
+        <input
+                type="password"
+                id="otp-input"
+                placeholder="Enter OTP"
+                style="display: none"
+        /><br />
+        <br />
+        <button onclick="verifyOTP()" id="verify-otp-btn" style="display: none">
+            Verify OTP
+        </button>
+        <div id="otp-message" class="valid-otp-message" style="display: none;"></div>
+        <div id="otp-error" class="error-message" style="display: none"></div>
+    </form>
+</div>
+<script>
+    // function getAndSendOTP() {
+    //     // Simulating sending email
+    //     // Assuming email is sent successfully
+    //     alert('OTP sent to your email');
+
+    //     // Show OTP input field and Verify button
+    //     var otpInput = document.getElementById("otp-input");
+    //     var verifyOTPBtn = document.getElementById("verify-otp-btn");
+    //     otpInput.style.display = "block";
+    //     verifyOTPBtn.style.display = "inline-block";
+    // }
+//     function getAndSendOTP() {
+//     const email = 'aditya.bajaj2021a@vitstudent.ac.in'; // Replace with user's email or retrieve from input field
+
+//     fetch('http://localhost:3000/send-otp-email', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ email })
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Failed to send OTP email');
+//         }
+//         console.log('OTP email sent successfully');
+//         // Show OTP input field after successfully sending OTP email
+//         var otpInput = document.getElementById("otp-input");
+//         otpInput.style.display = "block";
+//         // Optionally, you can also show the verify button here if needed
+//         var verifyOTPBtn = document.getElementById("verify-otp-btn");
+//         verifyOTPBtn.style.display = "inline-block";
+//     })
+//     .catch(error => {
+//         console.error('Error:', error.message);
+//         // Handle error as needed
+//     });
+// }
+
+function getAndSendOTP() {
+            const email = 'poonam81175@gmail.com'; // Replace with user's email or retrieve from input field
+
+            fetch('http://localhost:3000/send-otp-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send OTP email');
+                }
+                console.log('OTP email sent successfully');
+                // Show OTP input field after successfully sending OTP email
+                var otpInput = document.getElementById("otp-input");
+                otpInput.style.display = "block";
+                // Optionally, you can also show the verify button here if needed
+                var verifyOTPBtn = document.getElementById("verify-otp-btn");
+                verifyOTPBtn.style.display = "inline-block";
+            })
+            .catch(error => {
+                console.error('Error:', error.message);
+                // Handle error as needed
+            });
+        }
+
+
+
+    // function verifyOTP() {
+    //     var otpInput = document.getElementById("otp-input");
+    //     var enteredOTP = otpInput.value.trim();
+
+    //     var otpError = document.getElementById("otp-error");
+    //     var otpMessage = document.getElementById("otp-message");
+
+    //     // Server-side OTP (simulated)
+    //     var serverOTP = "123456";
+
+    //     if (enteredOTP === serverOTP) {
+    //         otpMessage.textContent = "OTP Verified";
+    //         otpMessage.style.display = "block";
+    //         otpError.style.display = "none";
+    //     } else {
+    //         otpError.textContent = "OTP Not Verified";
+    //         otpError.style.display = "block";
+    //         otpMessage.style.display = "none";
+    //     }
+    // }
+
+//     function verifyOTP() {
+//     const enteredOTP = document.getElementById("otp-input").value.trim();
+
+//     fetch('http://localhost:3000/verify-otp', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ enteredOTP })
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Failed to verify OTP');
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         if (data.verified) {
+//             console.log('OTP Verified');
+//             // Optionally, display a message indicating that OTP is verified
+//             // For example:
+//             var otpMessage = document.getElementById("otp-message");
+//             otpMessage.textContent = "OTP Verified";
+//             otpMessage.style.display = "block";
+//         } else {
+//             console.log('OTP Not Verified');
+//             // Optionally, display a message indicating that OTP is not verified
+//             // For example:
+//             var otpError = document.getElementById("otp-error");
+//             otpError.textContent = "OTP Not Verified";
+//             otpError.style.display = "block";
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error.message);
+//         // Handle error as needed
+//     });
+// }
+
+function verifyOTP() {
+    const enteredOTP = document.getElementById("otp-input").value.trim();
+    const email = 'poonam81175@gmail.com'; // Replace with user's email or retrieve from input field
+
+    fetch('http://localhost:3000/verify-otp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, enteredOTP }) // Send both email and entered OTP
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to verify OTP');
+        }
+        return response.json();
+    })
+    .then(data => {
+        var otpMessage = document.getElementById("otp-message");
+        var otpError = document.getElementById("otp-error");
+        
+        if (data.verified) {
+            console.log('OTP Verified');
+            otpMessage.textContent = "OTP Verified Doors are Opened"; // Overwrite message
+            otpMessage.style.display = "block";
+            otpError.style.display = "none"; // Hide error message if previously shown
+        } else {
+            console.log('OTP Not Verified');
+            otpError.textContent = "OTP Not Verified"; // Overwrite message
+            otpError.style.display = "block";
+            otpMessage.style.display = "none"; // Hide success message if previously shown
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error.message);
+        // Handle error as needed
+    });
+}
+
+</script>
+</body>
+</html>

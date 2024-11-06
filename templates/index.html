@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Security Authentication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #333333; /* Dark grey */
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1; /* Ensure the container is above other elements */
+        }
+        .navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999; /* Ensure the navbar is above other elements */
+        }
+        .navbar {
+            background-color: #333333; /* Dark grey */
+            padding: 10px 20px;
+            font-size: 18px;
+            width: calc(100% - 40px); /* Full width - padding */
+            max-width: 300px; /* Maximum width */
+            height: 100vh;
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 998; /* Ensure the navbar content is below the navbar */
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .navbar.open {
+            transform: translateX(0);
+        }
+        .navbar-content {
+            position: relative;
+            top: 50px;
+            width: 100%;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+            border-bottom: 1px solid #555555; /* Darker grey */
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #555555; /* Darker grey */
+        }
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            color: white;
+            padding: 10px;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        .menu-button:hover {
+            background-color: #222222; /* Dark grey */
+        }
+        .bottom-button {
+            position: absolute; /* Changed to absolute */
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff; /* Blue */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        .bottom-button:hover {
+            background-color: #0056b3; /* Dark blue */
+            color: black;
+        }
+        .instructions {
+            background-color: rgba(0, 0, 0, 0.8); /* Dark translucent background */
+            padding: 20px;
+            margin-top: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Border with lines not visible */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 998; /* Ensure the instructions are below the navbar */
+        }
+        .instructions h2 {
+            margin-bottom: 10px;
+        }
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .instructions ul li {
+            margin-bottom: 10px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 300px; /* Adjusted margin-top */
+        }
+        .image-container img {
+            width: 300px;
+            margin: 0 70px; /* Adjusted margin */
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <h1>WEB SECURITY AUTHENTICATION</h1>
+        <div class="instructions">
+            <h2>INSTRUCTIONS</h2>
+            <ul>
+                <li>Click on the navigation button to open the menu</li>
+                <li>Choose an option from the menu</li>
+                <li>Explore the features of the application</li>
+            </ul>
+        </div>
+        <div class="image-container">
+            <img src="https://itchronicles.com/wp-content/uploads/2023/07/face-recognition-1024x630.jpg" alt="Image 1">
+            <img src="https://plugins.miniorange.com/wp-content/uploads/2022/03/sms-otp.webp" alt="Image 2">
+        </div>
+    </div>
+    <div class="navbar-container">
+        <button class="menu-button" onclick="toggleMenu()">☰</button>
+        <div class="navbar" id="navbar">
+            <div class="navbar-content">
+                <a href="#">About</a>
+                <a href="#">Feedback</a>
+                <a href="#">Register</a>
+            </div>
+        </div>
+        <button class="menu-button" onclick="toggleMenu()" style="top: 20px; left: calc(100% - 40px);">✕</button>
+    </div>
+    <button class="bottom-button" id="runCodeButton" onclick="runAnotherCode()">Click for Face Recognition</button>
+
+    <script>
+        function toggleMenu() {
+            var navbar = document.getElementById("navbar");
+            navbar.classList.toggle("open");
+            var content = document.getElementById("content");
+            content.style.marginLeft = navbar.classList.contains("open") ? "300px" : "0"; // Adjusting margin left when navbar is opened or closed
+            
+            // Adjust button position
+            var runCodeButton = document.getElementById("runCodeButton");
+            runCodeButton.style.bottom = navbar.classList.contains("open") ? "calc(20px + 100vh)" : "20px";
+        }
+
+        function runAnotherCode() {
+            window.location.href = '/second';
+        }
+    </script>
+</body>
+</html>

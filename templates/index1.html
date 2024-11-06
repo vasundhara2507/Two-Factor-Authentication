@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #333333; /* Dark grey */
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1; /* Ensure the container is above other elements */
+        }
+        .bottom-button {
+            position: absolute; /* Changed to absolute */
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff; /* Blue */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        .bottom-button:hover {
+            background-color: #0056b3; /* Dark blue */
+            color: black;
+        }
+        .instructions {
+            background-color: rgba(0, 0, 0, 0.8); /* Dark translucent background */
+            padding: 20px;
+            margin-top: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Border with lines not visible */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 998; /* Ensure the instructions are below the navbar */
+        }
+        .instructions h2 {
+            margin-bottom: 10px;
+        }
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .instructions ul li {
+            margin-bottom: 10px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px; /* Adjusted margin-top */
+            position: relative; /* Added position relative */
+        }
+        .image-container img{
+            width: 400px;
+            margin: 0 70px; /* Adjusted margin */
+        }
+        .face-box {
+            position: absolute;
+            border: 2px solid blue;
+            pointer-events: none; /* Ensure the box doesn't interfere with clicks */
+        }
+        .verification-status {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .verified {
+            color: green;
+        }
+        .not-verified {
+            color: red;
+        }
+        .button{
+            display: flex;
+            margin-top: 20px;
+        }
+        .button1{
+            display: flex;
+            margin-top: 70px;
+        }
+        .otp-button{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <h1>FACE RECOGNITION</h1>
+        <div class="image-container">
+            <img src="https://itchronicles.com/wp-content/uploads/2023/07/face-recognition-1024x630.jpg" alt="Image 1">
+        </div>
+        <div class="button">
+            <button class="bottom-button" id="verifyButton" onclick="runcode()">Verify Face</button>
+        </div>
+        <div class="verification-status" id="verificationStatus"></div> <!-- Element to display verification status -->
+        <div class="button1">
+            <button class="bottom-button otp-button" id="otpButton" onclick="goForOTPVerification()">Go for OTP Verification</button>
+        </div>     
+    </div>
+    <button class="bottom-button" id="runCodeButton" onclick="runAnotherCode()">Go Back to Home Page</button>
+    <script>
+         function verifyFace() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/verify_face", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        document.getElementById("verificationStatus").innerHTML = xhr.responseText;
+                        if (xhr.responseText.trim() === "Face Verified") {
+                            document.getElementById("verificationStatus").classList.remove("not-verified");
+                            document.getElementById("verificationStatus").classList.add("verified");
+                            // If verified, show the OTP button
+                            document.getElementById("otpButton").style.display = "inline-block";
+                        }
+                        else{
+                            document.getElementById("verificationStatus").classList.remove("verified");
+                            document.getElementById("verificationStatus").classList.add("not-verified");
+                        }
+                    } else {
+                        // Handle error
+                        console.log("Error occurred: " + xhr.status);
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        // Attach click event listener to the "Verify Face" button
+        document.getElementById("verifyButton").addEventListener("click", function () {
+            verifyFace();
+        });
+        function goForOTPVerification() {
+            // Redirect to OTP verification page
+            window.location.href = '/third';
+        }
+    </script>
+    <script>
+        function runAnotherCode(){
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
